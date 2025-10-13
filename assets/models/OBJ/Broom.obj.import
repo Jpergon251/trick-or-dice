@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b5l0h3futi02f"
+path="res://.godot/imported/Broom.obj-566365130f904efa33e54a9b60d5c7f7.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Broom.obj-566365130f904efa33e54a9b60d5c7f7.mesh"]
+
+source_file="res://assets/models/OBJ/Broom.obj"
+dest_files=["res://.godot/imported/Broom.obj-566365130f904efa33e54a9b60d5c7f7.mesh", "res://.godot/imported/Broom.obj-566365130f904efa33e54a9b60d5c7f7.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

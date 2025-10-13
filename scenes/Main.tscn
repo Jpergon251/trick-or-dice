@@ -1,0 +1,170 @@
+[gd_scene load_steps=17 format=3 uid="uid://cp04sndywii4e"]
+
+[ext_resource type="PackedScene" uid="uid://casop62eikowi" path="res://scenes/Player/player.tscn" id="2_rvslj"]
+[ext_resource type="Texture2D" uid="uid://hfcpk48qjpsg" path="res://assets/textures/Textures/Village pixel-64x64.jpg" id="3_c01mt"]
+[ext_resource type="ArrayMesh" uid="uid://do2gf0tye2t04" path="res://assets/models/OBJ/Land_1.obj" id="4_nxtc6"]
+[ext_resource type="ArrayMesh" uid="uid://c8t4364anne6t" path="res://assets/models/OBJ/Tree_1.obj" id="5_jlsqs"]
+[ext_resource type="ArrayMesh" uid="uid://cdhxcw84ctlhn" path="res://assets/models/OBJ/Stone_3.obj" id="6_q8u5g"]
+[ext_resource type="ArrayMesh" uid="uid://tq2m3h5c26k" path="res://assets/models/OBJ/Rock_6.obj" id="7_lhr70"]
+[ext_resource type="ArrayMesh" uid="uid://dvfrq7ipo24rp" path="res://assets/models/OBJ/Rock_7.obj" id="8_wp0k4"]
+[ext_resource type="ArrayMesh" uid="uid://di1qv6mup7d3p" path="res://assets/models/OBJ/Rock_3.obj" id="9_bjd11"]
+[ext_resource type="ArrayMesh" uid="uid://d3algkhh2mi5d" path="res://assets/models/OBJ/Rock_4.obj" id="10_qmy6f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lhr70"]
+albedo_texture = ExtResource("3_c01mt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wp0k4"]
+albedo_texture = ExtResource("3_c01mt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mwfav"]
+albedo_texture = ExtResource("3_c01mt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3p2gp"]
+albedo_texture = ExtResource("3_c01mt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cvmbd"]
+albedo_texture = ExtResource("3_c01mt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ft6cd"]
+albedo_texture = ExtResource("3_c01mt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bjd11"]
+albedo_texture = ExtResource("3_c01mt")
+
+[node name="Main" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("2_rvslj")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 10.630875, -5.719205, 31.078266)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.75856197, 0.6515341, -0.009338468, -0.48146504, 0.57009745, 0.66571796, 0.43906167, -0.50049216, 0.74614507, 0, 6.700797, 0)
+
+[node name="Land1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.791306, -17.919968, -1.5179439)
+material_override = SubResource("StandardMaterial3D_lhr70")
+mesh = ExtResource("4_nxtc6")
+
+[node name="Tree1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.757232, -5.8236647, 29.2956)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+
+[node name="Rocks" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -11.919444, 0)
+
+[node name="Rock6" type="MeshInstance3D" parent="Rocks"]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 30.904116, -0.3204775, -4.9293003)
+material_override = SubResource("StandardMaterial3D_mwfav")
+mesh = ExtResource("7_lhr70")
+skeleton = NodePath("../..")
+
+[node name="Rock7" type="MeshInstance3D" parent="Rocks"]
+transform = Transform3D(2.4093208, 19.85435, 0, -19.85435, 2.4093208, 0, 0, 0, 20, 6.4191856, -4.7357187, 62.94803)
+material_override = SubResource("StandardMaterial3D_3p2gp")
+mesh = ExtResource("8_wp0k4")
+skeleton = NodePath("../..")
+
+[node name="Rock8" type="MeshInstance3D" parent="Rocks"]
+transform = Transform3D(-1.5705769, 24.916187, 0.45919564, 16.68229, 1.3268579, 10.980643, 10.919458, 1.5566485, -16.709717, 12.159584, -4.7357187, -63.550606)
+material_override = SubResource("StandardMaterial3D_3p2gp")
+mesh = ExtResource("8_wp0k4")
+skeleton = NodePath("../..")
+
+[node name="Rock9" type="MeshInstance3D" parent="Rocks"]
+transform = Transform3D(17.96921, -3.9199305, 8.202032, -8.448624, -1.3531972, 18.095547, -2.393373, -24.653662, -2.2973561, 133.4324, 0.053851128, 45.73009)
+material_override = SubResource("StandardMaterial3D_3p2gp")
+mesh = ExtResource("8_wp0k4")
+skeleton = NodePath("../..")
+
+[node name="Rock3" type="MeshInstance3D" parent="Rocks"]
+transform = Transform3D(16.093939, 0, 11.873714, 0, 20, 0, -11.873714, 0, 16.093939, 109.82114, 1.3170986, 57.0694)
+material_override = SubResource("StandardMaterial3D_cvmbd")
+mesh = ExtResource("9_bjd11")
+skeleton = NodePath("../..")
+
+[node name="Rock4" type="MeshInstance3D" parent="Rocks"]
+transform = Transform3D(20, 0, 0, 0, 17.723425, -9.267158, 0, 9.267158, 17.723425, 108.34106, -19.0755, -54.393703)
+material_override = SubResource("StandardMaterial3D_ft6cd")
+mesh = ExtResource("10_qmy6f")
+skeleton = NodePath("../..")
+
+[node name="Stones" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -11.919444, 0)
+
+[node name="Stone3" type="MeshInstance3D" parent="Stones"]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 5.485464, 1.1414881, 12.015744)
+material_override = SubResource("StandardMaterial3D_bjd11")
+mesh = ExtResource("6_q8u5g")
+skeleton = NodePath("../..")
+
+[node name="Stone5" type="MeshInstance3D" parent="Stones"]
+transform = Transform3D(-0.7719422, -7.9469643, -18.33712, 12.042371, -14.830145, 5.9201565, -15.9494705, -10.812617, 5.3574142, 26.765575, 12.382781, 22.153118)
+material_override = SubResource("StandardMaterial3D_bjd11")
+mesh = ExtResource("6_q8u5g")
+skeleton = NodePath("../..")
+
+[node name="Stone6" type="MeshInstance3D" parent="Stones"]
+transform = Transform3D(-0.771942, -7.946963, -18.337118, 19.985098, -0.30695844, -0.70828736, 0, -18.350792, 7.9528885, 44.927555, 6.533334, 23.556404)
+material_override = SubResource("StandardMaterial3D_bjd11")
+mesh = ExtResource("6_q8u5g")
+skeleton = NodePath("../..")
+
+[node name="Stone12" type="MeshInstance3D" parent="Stones"]
+transform = Transform3D(-1.02566, 13.318679, 14.884921, -4.375461, -14.692339, 12.844867, 19.488543, -2.5976977, 3.667236, 51.928654, 10.962459, 9.694063)
+material_override = SubResource("StandardMaterial3D_bjd11")
+mesh = ExtResource("6_q8u5g")
+skeleton = NodePath("../..")
+
+[node name="Stone13" type="MeshInstance3D" parent="Stones"]
+transform = Transform3D(-17.87665, -2.262873, -8.677827, -5.2491565, 18.331573, 6.033228, 7.271289, 7.670265, -16.979269, 58.360508, 1.39606, -11.65484)
+material_override = SubResource("StandardMaterial3D_bjd11")
+mesh = ExtResource("6_q8u5g")
+skeleton = NodePath("../..")
+
+[node name="Stone14" type="MeshInstance3D" parent="Stones"]
+transform = Transform3D(-17.87665, -2.262873, -8.677827, -5.2491565, 18.331573, 6.033228, 7.271289, 7.670265, -16.979269, 45.111195, 1.39606, -23.65009)
+material_override = SubResource("StandardMaterial3D_bjd11")
+mesh = ExtResource("6_q8u5g")
+skeleton = NodePath("../..")
+
+[node name="Stone15" type="MeshInstance3D" parent="Stones"]
+transform = Transform3D(-17.876652, -2.2628732, -8.677829, -8.12053, 12.296839, 13.522014, 3.805562, 15.60985, -11.910106, 23.86731, 1.39606, -28.705746)
+material_override = SubResource("StandardMaterial3D_bjd11")
+mesh = ExtResource("6_q8u5g")
+skeleton = NodePath("../..")
+
+[node name="Stone16" type="MeshInstance3D" parent="Stones"]
+transform = Transform3D(10.986851, -8.540579, 14.364811, -8.12053, 12.296839, 13.522014, -14.60637, -13.260715, 3.2874799, 7.95718, 3.1926298, -21.574747)
+material_override = SubResource("StandardMaterial3D_bjd11")
+mesh = ExtResource("6_q8u5g")
+skeleton = NodePath("../..")
+
+[node name="Stone7" type="MeshInstance3D" parent="Stones"]
+transform = Transform3D(-0.77194196, -7.9469643, -18.33712, -5.084537, -17.668861, 7.871399, -19.327488, 4.9656, -1.3383634, 105.07983, 10.715865, 33.90114)
+material_override = SubResource("StandardMaterial3D_bjd11")
+mesh = ExtResource("6_q8u5g")
+skeleton = NodePath("../..")
+
+[node name="Stone8" type="MeshInstance3D" parent="Stones"]
+transform = Transform3D(-0.7719423, -7.9469624, -18.337116, -12.319168, -14.260553, 6.6988587, -15.736652, 11.553457, -4.3445816, 111.43625, 10.715865, 18.50024)
+material_override = SubResource("StandardMaterial3D_bjd11")
+mesh = ExtResource("6_q8u5g")
+skeleton = NodePath("../..")
+
+[node name="Stone9" type="MeshInstance3D" parent="Stones"]
+transform = Transform3D(-4.8687243, -15.990542, 10.981718, 1.6564821, 10.938253, 16.661652, -19.327486, 4.9655995, -1.3383634, 111.43625, -0.46154308, 7.602647)
+material_override = SubResource("StandardMaterial3D_bjd11")
+mesh = ExtResource("6_q8u5g")
+skeleton = NodePath("../..")
+
+[node name="Stone10" type="MeshInstance3D" parent="Stones"]
+transform = Transform3D(-13.146377, 3.354355, -14.694251, 9.734632, -12.996471, -11.675986, -11.506944, -14.827001, 6.9101563, 106.16399, 9.720052, 1.3761816)
+material_override = SubResource("StandardMaterial3D_bjd11")
+mesh = ExtResource("6_q8u5g")
+skeleton = NodePath("../..")
+
+[node name="Stone11" type="MeshInstance3D" parent="Stones"]
+transform = Transform3D(-13.621323, 13.363131, 5.99052, -9.05814, -1.2596431, -17.786606, -11.506944, -14.827001, 6.9101567, 95.583725, 7.5488386, -12.650597)
+material_override = SubResource("StandardMaterial3D_bjd11")
+mesh = ExtResource("6_q8u5g")
+skeleton = NodePath("../..")

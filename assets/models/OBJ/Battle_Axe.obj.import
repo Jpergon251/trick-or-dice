@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cuvob32eji4rx"
+path="res://.godot/imported/Battle_Axe.obj-07b1abb337947a0e2608bf15603679cf.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Battle_Axe.obj-07b1abb337947a0e2608bf15603679cf.mesh"]
+
+source_file="res://assets/models/OBJ/Battle_Axe.obj"
+dest_files=["res://.godot/imported/Battle_Axe.obj-07b1abb337947a0e2608bf15603679cf.mesh", "res://.godot/imported/Battle_Axe.obj-07b1abb337947a0e2608bf15603679cf.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
