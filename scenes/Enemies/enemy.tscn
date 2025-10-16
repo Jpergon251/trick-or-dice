@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://1gshxsq7ynor"]
+
+[ext_resource type="Texture2D" uid="uid://bhjvutj64khle" path="res://assets/sprites/EnemyPlaceholder.png" id="1_5alqo"]
+
+[node name="Enemy" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+pixel_size = 0.001
+billboard = 1
+texture = ExtResource("1_5alqo")

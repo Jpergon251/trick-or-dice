@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0tbl8o7g1bea"]
+
+[ext_resource type="Script" uid="uid://c7qtha5xfcg4" path="res://scripts/enviroment/spawn_zone.gd" id="1_782gq"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_782gq"]
+height = 1.0
+radius = 2.0
+
+[node name="SpawnZone" type="Area3D"]
+script = ExtResource("1_782gq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_782gq")
+debug_color = Color(0, 0.6, 0.69803923, 1)

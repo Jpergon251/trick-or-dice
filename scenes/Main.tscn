@@ -1,6 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://cp04sndywii4e"]
+[gd_scene load_steps=23 format=3 uid="uid://cp04sndywii4e"]
 
+[ext_resource type="Script" uid="uid://opbulalqxtwt" path="res://scripts/enviroment/path_follow_3d.gd" id="1_qmy6f"]
 [ext_resource type="PackedScene" uid="uid://casop62eikowi" path="res://scenes/Player/player.tscn" id="2_rvslj"]
+[ext_resource type="Script" uid="uid://ceex06co1uk1t" path="res://scripts/player/player.gd" id="2_wp0k4"]
 [ext_resource type="Texture2D" uid="uid://hfcpk48qjpsg" path="res://assets/textures/Textures/Village pixel-64x64.jpg" id="3_c01mt"]
 [ext_resource type="ArrayMesh" uid="uid://do2gf0tye2t04" path="res://assets/models/OBJ/Land_1.obj" id="4_nxtc6"]
 [ext_resource type="ArrayMesh" uid="uid://c8t4364anne6t" path="res://assets/models/OBJ/Tree_1.obj" id="5_jlsqs"]
@@ -9,6 +11,15 @@
 [ext_resource type="ArrayMesh" uid="uid://dvfrq7ipo24rp" path="res://assets/models/OBJ/Rock_7.obj" id="8_wp0k4"]
 [ext_resource type="ArrayMesh" uid="uid://di1qv6mup7d3p" path="res://assets/models/OBJ/Rock_3.obj" id="9_bjd11"]
 [ext_resource type="ArrayMesh" uid="uid://d3algkhh2mi5d" path="res://assets/models/OBJ/Rock_4.obj" id="10_qmy6f"]
+[ext_resource type="PackedScene" uid="uid://dfwf718x1c5ra" path="res://scenes/Enviroment/checkpoint_area.tscn" id="11_bjd11"]
+[ext_resource type="PackedScene" uid="uid://1gshxsq7ynor" path="res://scenes/Enemies/enemy.tscn" id="12_bjd11"]
+
+[sub_resource type="Curve3D" id="Curve3D_bjd11"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8.3, 0.29, 0.455),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lhr70"]
 albedo_texture = ExtResource("3_c01mt")
@@ -31,23 +42,985 @@ albedo_texture = ExtResource("3_c01mt")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bjd11"]
 albedo_texture = ExtResource("3_c01mt")
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bjd11"]
+height = 1.1923828
+radius = 2.1469727
+
 [node name="Main" type="Node3D"]
 
-[node name="Player" parent="." instance=ExtResource("2_rvslj")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 10.630875, -5.719205, 31.078266)
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.273632, -5.513125, 34.33665)
+curve = SubResource("Curve3D_bjd11")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D" node_paths=PackedStringArray("checkpoints")]
+transform = Transform3D(-0.054736394, -0.03481376, -0.9978793, -3.7252446e-09, 0.99938816, -0.034865662, 0.99848855, -0.0019084605, -0.054702993, 0, 0, 0)
+loop = false
+script = ExtResource("1_qmy6f")
+checkpoints = [NodePath("../../CheckpointArea")]
+
+[node name="Player" parent="Path3D/PathFollow3D" instance=ExtResource("2_rvslj")]
+transform = Transform3D(-0.024277078, 0, 0.4994123, 0, 0.5, 0, -0.4994123, 0, -0.024277078, 0, 0, 0)
+script = ExtResource("2_wp0k4")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.75856197, 0.6515341, -0.009338468, -0.48146504, 0.57009745, 0.66571796, 0.43906167, -0.50049216, 0.74614507, 0, 6.700797, 0)
+light_color = Color(0.91764706, 0.5647059, 0.2901961, 1)
+light_bake_mode = 1
 
 [node name="Land1" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.791306, -17.919968, -1.5179439)
 material_override = SubResource("StandardMaterial3D_lhr70")
 mesh = ExtResource("4_nxtc6")
 
-[node name="Tree1" type="MeshInstance3D" parent="."]
+[node name="Trees" type="Node3D" parent="."]
+
+[node name="Tree1" type="MeshInstance3D" parent="Trees"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.757232, -5.8236647, 29.2956)
 material_override = SubResource("StandardMaterial3D_wp0k4")
 mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree2" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.058347, -5.8236647, 27.322464)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree3" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.373071, -5.8236647, 27.322464)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree4" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.373071, -5.8236647, 39.04139)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree5" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.196668, -5.8236647, 40.353024)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree6" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.982586, -5.8236647, 40.353024)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree7" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.948104, -5.8236647, 41.938457)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree8" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.948104, -5.8236647, 24.690027)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree9" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.8024, -5.8236647, 24.690027)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree10" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8990602, -5.8236647, 29.2956)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree11" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.200175, -5.8236647, 27.322464)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree12" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5148993, -5.8236647, 27.322464)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree13" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.0899324, -5.8236647, 24.690027)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree14" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9442282, -5.8236647, 24.690027)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree15" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.93165, -5.8236647, 29.2956)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree16" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.232765, -5.8236647, 27.322464)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree17" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.553608, -5.8236647, 27.322464)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Land2" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.86926, -17.91997, -1.5085216)
+material_override = SubResource("StandardMaterial3D_lhr70")
+mesh = ExtResource("4_nxtc6")
+skeleton = NodePath("../..")
+
+[node name="Tree63" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.009605, -5.8236666, 29.305023)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree64" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.310722, -5.8236666, 27.331886)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree66" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.8406706, 0, 0.5415468, 0, 1, 0, -0.5415468, 0, 0.8406706, 35.695477, -5.8236647, 33.48669)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree67" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.8406706, 0, 0.5415468, 0, 1, 0, -0.5415468, 0, 0.8406706, 33.468452, -5.8236647, 32.574203)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree68" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.8406706, 0, 0.5415468, 0, 1, 0, -0.5415468, 0, 0.8406706, 36.63205, -5.8236666, 30.547472)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree69" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.8406706, 0, 0.5415468, 0, 1, 0, -0.5415468, 0, 0.8406706, 41.695618, -5.8236647, 29.768658)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree70" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.8406706, 0, 0.5415468, 0, 1, 0, -0.5415468, 0, 0.8406706, 39.468594, -5.8236647, 28.85617)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree71" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.8406706, 0, 0.5415468, 0, 1, 0, -0.5415468, 0, 0.8406706, 42.63219, -5.8236666, 26.82944)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree72" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.0020420253, 0, 0.99999785, 0, 1, 0, -0.99999785, 0, 0.0020420253, 48.233517, -5.8236647, 26.660702)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree73" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.0020420253, 0, 0.99999785, 0, 1, 0, -0.99999785, 0, 0.0020420253, 46.25757, -5.8236647, 28.03471)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree74" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.0020420253, 0, 0.99999785, 0, 1, 0, -0.99999785, 0, 0.0020420253, 46.274662, -5.8236666, 24.277624)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree75" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.71496093, 0, -0.69916433, 0, 1, 0, 0.69916433, 0, -0.71496093, 51.610584, -5.8236647, 23.835167)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree76" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.71496093, 0, -0.69916433, 0, 1, 0, 0.69916433, 0, -0.71496093, 53.975376, -5.8236647, 24.282408)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree77" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.71496093, 0, -0.69916433, 0, 1, 0, 0.69916433, 0, -0.71496093, 51.2826, -5.8236666, 26.90251)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree78" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.92511034, 0, 0.3796984, 0, 1, 0, -0.3796984, 0, -0.92511034, 61.658535, -5.8236647, 21.571028)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree79" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.92511034, 0, 0.3796984, 0, 1, 0, -0.3796984, 0, -0.92511034, 62.184177, -5.8236647, 23.919636)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree80" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.92511034, 0, 0.3796984, 0, 1, 0, -0.3796984, 0, -0.92511034, 58.71201, -5.8236666, 22.48435)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree81" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.21942061, 0, 0.97563034, 0, 1, 0, -0.97563034, 0, 0.21942061, 67.93602, -5.8236647, 19.906275)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree82" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.21942061, 0, 0.97563034, 0, 1, 0, -0.97563034, 0, 0.21942061, 65.7086, -5.8236647, 20.817778)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree83" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.21942061, 0, 0.97563034, 0, 1, 0, -0.97563034, 0, 0.21942061, 66.54218, -5.8236666, 17.15429)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree87" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.95726407, 0, -0.28921565, 0, 1, 0, 0.28921565, 0, -0.95726407, 68.49812, -5.8236647, 0.32281005)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree88" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.95726407, 0, -0.28921565, 0, 1, 0, 0.28921565, 0, -0.95726407, 70.38794, -5.8236647, 1.8130676)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree89" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.95726407, 0, -0.28921565, 0, 1, 0, 0.28921565, 0, -0.95726407, 66.78867, -5.8236666, 2.890667)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree90" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.44543222, 0, 0.8953156, 0, 1, 0, -0.8953156, 0, -0.44543222, 72.317444, -5.8236647, -4.9299097)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree91" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.44543222, 0, 0.8953156, 0, 1, 0, -0.8953156, 0, -0.44543222, 71.16469, -5.8236647, -2.8172402)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree92" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.44543222, 0, 0.8953156, 0, 1, 0, -0.8953156, 0, -0.44543222, 69.49959, -5.8236666, -6.1852365)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree93" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.3280424, 0, -0.94466305, 0, 1, 0, 0.94466305, 0, -0.3280424, 70.48833, -5.8236647, -15.938129)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree94" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.3280424, 0, -0.94466305, 0, 1, 0, 0.94466305, 0, -0.3280424, 72.80433, -5.8236647, -16.592648)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree95" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.3280424, 0, -0.94466305, 0, 1, 0, 0.94466305, 0, -0.3280424, 71.56294, -5.8236666, -13.046538)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree111" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.3280424, 0, -0.94466305, 0, 1, 0, 0.94466305, 0, -0.3280424, 70.48833, -5.8236647, -11.462968)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree112" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.3280424, 0, -0.94466305, 0, 1, 0, 0.94466305, 0, -0.3280424, 71.56294, -5.8236666, -8.571377)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree96" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9862567, 0, 0.16521981, 0, 1, 0, -0.16521981, 0, -0.9862567, 68.47952, -5.8236647, -22.11413)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree97" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9862567, 0, 0.16521981, 0, 1, 0, -0.16521981, 0, -0.9862567, 69.51262, -5.8236647, -19.940437)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree119" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.6639001, 0, -0.7478213, 0, 1, 0, 0.7478213, 0, -0.6639001, 94.58731, -5.8236647, 14.978212)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree120" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.6639001, 0, -0.7478213, 0, 1, 0, 0.7478213, 0, -0.6639001, 94.476364, -5.8236666, 18.061035)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree121" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.84843624, 0, 0.52929753, 0, 1, 0, -0.52929753, 0, -0.84843624, 95.2138, -5.8236647, 10.906605)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree131" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.1077044, 0, -0.99418294, 0, 1, 0, 0.99418294, 0, 0.1077044, 97.24654, -5.8236666, 5.890005)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree132" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9621086, 0, -0.2726664, 0, 1, 0, 0.2726664, 0, -0.9621086, 92.44363, -5.8236647, 0.5363393)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree133" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.6559141, 0, -0.75483555, 0, 1, 0, 0.75483555, 0, -0.6559141, 94.514404, -5.8236666, 7.083191)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree134" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.8540142, 0, 0.5202498, 0, 1, 0, -0.5202498, 0, -0.8540142, 95.17576, -5.8236647, -0.07867336)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree135" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9487437, 0, -0.3160465, 0, 1, 0, 0.3160465, 0, -0.9487437, 91.0895, -5.8236666, -4.0246)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree136" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.47045746, 0, 0.88242275, 0, 1, 0, -0.88242275, 0, -0.47045746, 95.303116, -5.8236647, -9.853417)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree137" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.03224802, 0, -0.9994799, 0, 1, 0, 0.9994799, 0, -0.03224802, 94.01847, -5.8236666, -5.6390867)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree138" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9907669, 0, -0.13557714, 0, 1, 0, 0.13557714, 0, -0.9907669, 90.01063, -5.8236647, -11.611256)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree139" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.03224802, 0, -0.9994799, 0, 1, 0, 0.9994799, 0, -0.03224802, 88.95219, -5.8236666, -16.438534)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree140" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9907669, 0, -0.13557714, 0, 1, 0, 0.13557714, 0, -0.9907669, 84.94434, -5.8236647, -22.410704)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree141" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9907669, 0, -0.13557714, 0, 1, 0, 0.13557714, 0, -0.9907669, 88.47018, -5.8236647, -22.43512)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree142" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.91239893, 0, 0.40930223, 0, 1, 0, -0.40930223, 0, -0.91239893, 82.75634, -5.8236647, -28.417156)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree143" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.91239893, 0, 0.40930223, 0, 1, 0, -0.40930223, 0, -0.91239893, 85.76087, -5.8236647, -26.57192)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree144" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.3923049, 0, 0.9198353, 0, 1, 0, -0.9198353, 0, -0.3923049, 83.78146, -5.8236647, -34.335968)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree145" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.3923049, 0, 0.9198353, 0, 1, 0, -0.9198353, 0, -0.3923049, 84.73575, -5.8236647, -30.941643)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree146" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.3923049, 0, 0.9198353, 0, 1, 0, -0.9198353, 0, -0.3923049, 79.87277, -5.8236647, -34.335968)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree147" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.3923049, 0, 0.9198353, 0, 1, 0, -0.9198353, 0, -0.3923049, 80.82706, -5.8236647, -30.941643)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree148" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.74527836, 0, -0.6667536, 0, 1, 0, 0.6667536, 0, -0.74527836, 81.27007, -5.8236647, -41.08596)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree149" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9998699, 0, 0.016126275, 0, 1, 0, -0.016126275, 0, -0.9998699, 76.28121, -5.8236647, -44.431774)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree150" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9998699, 0, 0.016126275, 0, 1, 0, -0.016126275, 0, -0.9998699, 79.77003, -5.8236647, -43.92162)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree151" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9998699, 0, 0.016126275, 0, 1, 0, -0.016126275, 0, -0.9998699, 74.69003, -5.8236647, -40.861618)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree152" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9998699, 0, 0.016126275, 0, 1, 0, -0.016126275, 0, -0.9998699, 78.17885, -5.8236647, -40.351463)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree153" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.10484114, 0, -0.99448895, 0, 1, 0, 0.99448895, 0, -0.10484114, 72.89083, -5.8236647, -45.228737)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree154" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.7519435, 0, -0.6592275, 0, 1, 0, 0.6592275, 0, -0.7519435, 66.947075, -5.8236647, -44.359844)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree155" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.7519435, 0, -0.6592275, 0, 1, 0, 0.6592275, 0, -0.7519435, 69.87549, -5.8236647, -46.32364)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree156" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.7519435, 0, -0.6592275, 0, 1, 0, 0.6592275, 0, -0.7519435, 68.16421, -5.8236647, -40.64548)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree157" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.7519435, 0, -0.6592275, 0, 1, 0, 0.6592275, 0, -0.7519435, 71.09261, -5.8236647, -42.609283)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree122" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9353267, 0, -0.35378504, 0, 1, 0, 0.35378504, 0, -0.9353267, 90.44375, -5.8236647, 23.013414)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree123" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9353267, 0, -0.35378504, 0, 1, 0, 0.35378504, 0, -0.9353267, 88.913284, -5.8236666, 25.691807)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree124" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.50541633, 0, 0.8628756, 0, 1, 0, -0.8628756, 0, -0.50541633, 92.89011, -5.8236647, 19.69893)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree125" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.69598794, 0, -0.71805334, 0, 1, 0, 0.71805334, 0, -0.69598794, 87.9928, -5.8236647, 35.201103)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree126" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.69598794, 0, -0.71805334, 0, 1, 0, 0.71805334, 0, -0.69598794, 87.747055, -5.8236666, 38.276115)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree127" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.8244622, 0, 0.5659172, 0, 1, 0, -0.5659172, 0, -0.8244622, 88.79685, -5.8236647, 31.16081)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree128" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.69598794, 0, -0.71805334, 0, 1, 0, 0.71805334, 0, -0.69598794, 94.12592, -5.8236647, 24.86678)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree129" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.69598794, 0, -0.71805334, 0, 1, 0, 0.71805334, 0, -0.69598794, 92.035774, -5.8236666, 27.941792)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree130" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.8244622, 0, 0.5659172, 0, 1, 0, -0.5659172, 0, -0.8244622, 94.92998, -5.8236647, 20.826487)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree98" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9862567, 0, 0.16521981, 0, 1, 0, -0.16521981, 0, -0.9862567, 65.8087, -5.8236666, -20.57048)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree99" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9862567, 0, 0.16521981, 0, 1, 0, -0.16521981, 0, -0.9862567, 63.165688, -5.8236647, -22.11413)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree100" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9862567, 0, 0.16521981, 0, 1, 0, -0.16521981, 0, -0.9862567, 64.198784, -5.8236647, -19.940437)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree101" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9862567, 0, 0.16521981, 0, 1, 0, -0.16521981, 0, -0.9862567, 60.494865, -5.8236666, -20.57048)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree102" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9862567, 0, 0.16521981, 0, 1, 0, -0.16521981, 0, -0.9862567, 58.759285, -5.8236647, -26.542665)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree103" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9862567, 0, 0.16521981, 0, 1, 0, -0.16521981, 0, -0.9862567, 59.79238, -5.8236647, -24.368973)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree104" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9862567, 0, 0.16521981, 0, 1, 0, -0.16521981, 0, -0.9862567, 56.088463, -5.8236666, -24.999016)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree105" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9862567, 0, 0.16521981, 0, 1, 0, -0.16521981, 0, -0.9862567, 54.9386, -5.8236647, -30.845093)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree106" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9862567, 0, 0.16521981, 0, 1, 0, -0.16521981, 0, -0.9862567, 55.971695, -5.8236647, -28.6714)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree107" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.9862567, 0, 0.16521981, 0, 1, 0, -0.16521981, 0, -0.9862567, 52.267776, -5.8236666, -29.301443)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree108" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.4218589, 0, -0.9066614, 0, 1, 0, 0.9066614, 0, -0.4218589, 64.61943, -5.8236647, -2.4903889)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree109" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.4218589, 0, -0.9066614, 0, 1, 0, 0.9066614, 0, -0.4218589, 66.98972, -5.8236647, -2.9074154)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree110" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.4218589, 0, -0.9066614, 0, 1, 0, 0.9066614, 0, -0.4218589, 65.39621, -5.8236666, 0.49503422)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree84" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.21942061, 0, 0.97563034, 0, 1, 0, -0.97563034, 0, 0.21942061, 71.164955, -5.8236647, 11.74457)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree85" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.21942061, 0, 0.97563034, 0, 1, 0, -0.97563034, 0, 0.21942061, 68.93754, -5.8236647, 12.656073)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree86" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.21942061, 0, 0.97563034, 0, 1, 0, -0.97563034, 0, 0.21942061, 69.77112, -5.8236666, 8.992584)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree65" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.631565, -5.8236666, 27.331886)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree18" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.12864, -5.8236647, 24.690027)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree19" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.982937, -5.8236647, 24.690027)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree20" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.26606092, 0, -0.96395624, 0, 1, 0, 0.96395624, 0, 0.26606092, 26.808851, -5.8236647, 32.183266)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree21" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.26606092, 0, -0.96395624, 0, 1, 0, 0.96395624, 0, 0.26606092, 29.323105, -5.8236647, 33.876465)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree22" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.26606092, 0, -0.96395624, 0, 1, 0, 0.96395624, 0, 0.26606092, 28.342598, -5.8236647, 30.324022)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree23" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.26606092, 0, -0.96395624, 0, 1, 0, 0.96395624, 0, 0.26606092, 31.033146, -5.8236647, 30.177938)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree60" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.23748238, 0, -0.9713919, 0, 1, 0, 0.9713919, 0, -0.23748238, 19.915264, -5.8236647, 29.820183)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree61" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.23748238, 0, -0.9713919, 0, 1, 0, 0.9713919, 0, -0.23748238, 21.285479, -5.8236647, 32.52405)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree62" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.23748238, 0, -0.9713919, 0, 1, 0, 0.9713919, 0, -0.23748238, 24.581236, -5.8236647, 30.127945)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree24" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.26606092, 0, -0.96395624, 0, 1, 0, 0.96395624, 0, 0.26606092, 30.196196, -5.8236647, 27.145618)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree25" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.86500263, 0, 0.50176746, 0, 1, 0, -0.50176746, 0, 0.86500263, 31.126707, -5.8236647, 43.012993)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree26" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.86500263, 0, 0.50176746, 0, 1, 0, -0.50176746, 0, 0.86500263, 32.12712, -5.8236647, 40.1516)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree27" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.86500263, 0, 0.50176746, 0, 1, 0, -0.50176746, 0, 0.86500263, 28.939348, -5.8236647, 42.00075)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree28" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.86500263, 0, 0.50176746, 0, 1, 0, -0.50176746, 0, 0.86500263, 28.115885, -5.8236647, 39.435154)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree29" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.86500263, 0, 0.50176746, 0, 1, 0, -0.50176746, 0, 0.86500263, 25.394842, -5.8236647, 41.013565)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree30" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.86500263, 0, 0.50176746, 0, 1, 0, -0.50176746, 0, 0.86500263, 22.275679, -5.8236647, 43.012993)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree31" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.86500263, 0, 0.50176746, 0, 1, 0, -0.50176746, 0, 0.86500263, 23.276093, -5.8236647, 40.1516)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree32" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.86500263, 0, 0.50176746, 0, 1, 0, -0.50176746, 0, 0.86500263, 20.08832, -5.8236647, 42.00075)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree33" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.86500263, 0, 0.50176746, 0, 1, 0, -0.50176746, 0, 0.86500263, 19.264856, -5.8236647, 39.435154)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree34" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.86500263, 0, 0.50176746, 0, 1, 0, -0.50176746, 0, 0.86500263, 16.543814, -5.8236647, 41.013565)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree35" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.9990168, 0, -0.044334292, 0, 1, 0, 0.044334292, 0, 0.9990168, 40.11774, -5.8236647, 45.481518)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree36" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.9990168, 0, -0.044334292, 0, 1, 0, 0.044334292, 0, 0.9990168, 42.50407, -5.8236647, 43.612335)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree37" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.9990168, 0, -0.044334292, 0, 1, 0, 0.044334292, 0, 0.9990168, 38.822414, -5.8236647, 43.44895)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree38" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.9990168, 0, -0.044334292, 0, 1, 0, 0.044334292, 0, 0.9990168, 39.51359, -5.8236647, 40.844597)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree39" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.9990168, 0, -0.044334292, 0, 1, 0, 0.044334292, 0, 0.9990168, 36.370983, -5.8236647, 40.705135)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree40" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.9990168, 0, -0.044334292, 0, 1, 0, 0.044334292, 0, 0.9990168, 82.064445, -5.8236647, 45.481518)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree41" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.9990168, 0, -0.044334292, 0, 1, 0, 0.044334292, 0, 0.9990168, 84.450775, -5.8236647, 43.612335)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree42" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.9990168, 0, -0.044334292, 0, 1, 0, 0.044334292, 0, 0.9990168, 80.76912, -5.8236647, 43.44895)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree43" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.9990168, 0, -0.044334292, 0, 1, 0, 0.044334292, 0, 0.9990168, 81.4603, -5.8236647, 40.844597)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree44" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.9990168, 0, -0.044334292, 0, 1, 0, 0.044334292, 0, 0.9990168, 78.31769, -5.8236647, 40.705135)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree45" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.9990168, 0, -0.044334292, 0, 1, 0, 0.044334292, 0, 0.9990168, 68.04666, -5.8236647, 45.481518)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree46" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.9990168, 0, -0.044334292, 0, 1, 0, 0.044334292, 0, 0.9990168, 70.43299, -5.8236647, 43.612335)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree47" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.9990168, 0, -0.044334292, 0, 1, 0, 0.044334292, 0, 0.9990168, 66.751335, -5.8236647, 43.44895)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree48" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.9990168, 0, -0.044334292, 0, 1, 0, 0.044334292, 0, 0.9990168, 67.44251, -5.8236647, 40.844597)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree113" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.8954556, 0, 0.44515103, 0, 1, 0, -0.44515103, 0, 0.8954556, 75.67302, -5.8236647, 45.49785)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree114" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.8954556, 0, 0.44515103, 0, 1, 0, -0.44515103, 0, 0.8954556, 76.85522, -5.8236647, 42.706646)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree115" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.8954556, 0, 0.44515103, 0, 1, 0, -0.44515103, 0, 0.8954556, 72.8983, -5.8236647, 41.733944)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree116" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.017434895, 0, 0.99984807, 0, 1, 0, -0.99984807, 0, -0.017434895, 63.56261, -5.8236647, 43.77183)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree117" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.017434895, 0, 0.99984807, 0, 1, 0, -0.99984807, 0, -0.017434895, 61.549652, -5.8236647, 41.50547)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree118" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.017434895, 0, 0.99984807, 0, 1, 0, -0.99984807, 0, -0.017434895, 58.97184, -5.8236647, 44.66114)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree49" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.9990168, 0, -0.044334292, 0, 1, 0, 0.044334292, 0, 0.9990168, 64.299904, -5.8236647, 40.705135)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree50" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.8732625, 0, 0.48725018, 0, 1, 0, -0.48725018, 0, 0.8732625, 56.448753, -5.8236647, 46.251865)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree51" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.8732625, 0, 0.48725018, 0, 1, 0, -0.48725018, 0, 0.8732625, 57.496815, -5.8236647, 43.407578)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree52" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.8732625, 0, 0.48725018, 0, 1, 0, -0.48725018, 0, 0.8732625, 54.2786, -5.8236647, 45.203228)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree53" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.8732625, 0, 0.48725018, 0, 1, 0, -0.48725018, 0, 0.8732625, 53.4981, -5.8236647, 42.624233)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree54" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(0.8732625, 0, 0.48725018, 0, 1, 0, -0.48725018, 0, 0.8732625, 50.75108, -5.8236647, 44.15698)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree55" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.35906854, 0, 0.93331134, 0, 1, 0, -0.93331134, 0, -0.35906854, 50.00284, -5.8236647, 39.247383)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree56" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.35906854, 0, 0.93331134, 0, 1, 0, -0.93331134, 0, -0.35906854, 47.335026, -5.8236647, 37.80822)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree57" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.35906854, 0, 0.93331134, 0, 1, 0, -0.93331134, 0, -0.35906854, 48.65829, -5.8236647, 41.247734)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree58" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.35906854, 0, 0.93331134, 0, 1, 0, -0.93331134, 0, -0.35906854, 45.99493, -5.8236647, 41.656273)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
+
+[node name="Tree59" type="MeshInstance3D" parent="Trees"]
+transform = Transform3D(-0.35906854, 0, 0.93331134, 0, 1, 0, -0.93331134, 0, -0.35906854, 47.124454, -5.8236647, 44.59219)
+material_override = SubResource("StandardMaterial3D_wp0k4")
+mesh = ExtResource("5_jlsqs")
+skeleton = NodePath("../..")
 
 [node name="Rocks" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -11.919444, 0)
@@ -168,3 +1141,15 @@ transform = Transform3D(-13.621323, 13.363131, 5.99052, -9.05814, -1.2596431, -1
 material_override = SubResource("StandardMaterial3D_bjd11")
 mesh = ExtResource("6_q8u5g")
 skeleton = NodePath("../..")
+
+[node name="CheckpointArea" parent="." node_paths=PackedStringArray("spawn_zone") instance=ExtResource("11_bjd11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.544678, -4.9609027, 34.82502)
+spawn_zone = NodePath("SpawnZone")
+enemy_scene = ExtResource("12_bjd11")
+
+[node name="SpawnZone" type="Area3D" parent="CheckpointArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20110512, 0, -4.563616)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CheckpointArea/SpawnZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21142578, 0)
+shape = SubResource("CylinderShape3D_bjd11")
