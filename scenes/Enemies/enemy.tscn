@@ -1,10 +1,48 @@
-[gd_scene load_steps=2 format=3 uid="uid://1gshxsq7ynor"]
+[gd_scene load_steps=6 format=3 uid="uid://1gshxsq7ynor"]
 
 [ext_resource type="Texture2D" uid="uid://bhjvutj64khle" path="res://assets/sprites/EnemyPlaceholder.png" id="1_5alqo"]
+[ext_resource type="Script" uid="uid://cxfjk15ureb0i" path="res://scripts/enemies/enemy.gd" id="1_48hpc"]
+[ext_resource type="Texture2D" uid="uid://cmb8ykjeuvfu7" path="res://assets/sprites/GreyHighlight.png" id="3_8swre"]
+[ext_resource type="Texture2D" uid="uid://b732xw71aektu" path="res://assets/sprites/GreenHighlight.png" id="4_0th86"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5alqo"]
+margin = 2.0
+size = Vector3(0.5, 0.5, 0.5)
 
 [node name="Enemy" type="Node3D"]
+script = ExtResource("1_48hpc")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="EnemyIMG" type="Sprite3D" parent="."]
 pixel_size = 0.001
 billboard = 1
 texture = ExtResource("1_5alqo")
+
+[node name="HoverHighlight" type="Sprite3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+visible = false
+billboard = 1
+texture = ExtResource("3_8swre")
+
+[node name="SelectedHighlight" type="Sprite3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+visible = false
+billboard = 1
+texture = ExtResource("4_0th86")
+
+[node name="EnemyArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyArea"]
+shape = SubResource("BoxShape3D_5alqo")
+
+[node name="EnemyNameLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+billboard = 1
+double_sided = false
+modulate = Color(0.99116415, 0.99116427, 0.99116415, 1)
+text = "Name"
+font_size = 14
+outline_size = 2
+
+[connection signal="input_event" from="EnemyArea" to="." method="_on_enemy_area_input_event"]
+[connection signal="mouse_entered" from="EnemyArea" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="EnemyArea" to="." method="_on_area_3d_mouse_exited"]

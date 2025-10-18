@@ -5,6 +5,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_q8u5g"]
 
 [node name="CheckpointArea" type="Area3D"]
+collision_layer = 255
 script = ExtResource("1_d62jo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

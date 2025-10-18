@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwdxtghtbjgeb"]
+
+[ext_resource type="PackedScene" uid="uid://1gshxsq7ynor" path="res://scenes/Enemies/enemy.tscn" id="1_ryjsw"]
+
+[node name="Testing" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.96409297)
+
+[node name="Enemy" parent="." instance=ExtResource("1_ryjsw")]

@@ -34,9 +34,6 @@ func _reach_checkpoint(area: Area3D) -> void:
 		var target_rotation = atan2(direction.x, direction.z)
 		player.rotation.y = target_rotation
 
-	# Spawnear enemigos desde el checkpoint
-	area.spawn_enemies()
-
 	# Esperar hasta que todos los enemigos de esta zona estén derrotados
 	await check_enemies_defeated(area)
 

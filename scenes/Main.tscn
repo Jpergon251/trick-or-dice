@@ -1,8 +1,7 @@
-[gd_scene load_steps=23 format=3 uid="uid://cp04sndywii4e"]
+[gd_scene load_steps=22 format=3 uid="uid://cp04sndywii4e"]
 
 [ext_resource type="Script" uid="uid://opbulalqxtwt" path="res://scripts/enviroment/path_follow_3d.gd" id="1_qmy6f"]
 [ext_resource type="PackedScene" uid="uid://casop62eikowi" path="res://scenes/Player/player.tscn" id="2_rvslj"]
-[ext_resource type="Script" uid="uid://ceex06co1uk1t" path="res://scripts/player/player.gd" id="2_wp0k4"]
 [ext_resource type="Texture2D" uid="uid://hfcpk48qjpsg" path="res://assets/textures/Textures/Village pixel-64x64.jpg" id="3_c01mt"]
 [ext_resource type="ArrayMesh" uid="uid://do2gf0tye2t04" path="res://assets/models/OBJ/Land_1.obj" id="4_nxtc6"]
 [ext_resource type="ArrayMesh" uid="uid://c8t4364anne6t" path="res://assets/models/OBJ/Tree_1.obj" id="5_jlsqs"]
@@ -53,14 +52,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.273632, -5.513125, 34.33665
 curve = SubResource("Curve3D_bjd11")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D" node_paths=PackedStringArray("checkpoints")]
-transform = Transform3D(-0.054736394, -0.03481376, -0.9978793, -3.7252446e-09, 0.99938816, -0.034865662, 0.99848855, -0.0019084605, -0.054702993, 0, 0, 0)
+transform = Transform3D(-0.054736394, -0.034813717, -0.9978793, -3.7252446e-09, 0.9993868, -0.034865662, 0.99848855, -0.001908458, -0.054702993, 0, 0, 0)
 loop = false
 script = ExtResource("1_qmy6f")
 checkpoints = [NodePath("../../CheckpointArea")]
 
 [node name="Player" parent="Path3D/PathFollow3D" instance=ExtResource("2_rvslj")]
 transform = Transform3D(-0.024277078, 0, 0.4994123, 0, 0.5, 0, -0.4994123, 0, -0.024277078, 0, 0, 0)
-script = ExtResource("2_wp0k4")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.75856197, 0.6515341, -0.009338468, -0.48146504, 0.57009745, 0.66571796, 0.43906167, -0.50049216, 0.74614507, 0, 6.700797, 0)
