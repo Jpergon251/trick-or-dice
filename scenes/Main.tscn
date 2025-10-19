@@ -52,7 +52,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.273632, -5.513125, 34.33665
 curve = SubResource("Curve3D_bjd11")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D" node_paths=PackedStringArray("checkpoints")]
-transform = Transform3D(-0.054736394, -0.034813717, -0.9978793, -3.7252446e-09, 0.9993868, -0.034865662, 0.99848855, -0.001908458, -0.054702993, 0, 0, 0)
+transform = Transform3D(-0.054736394, -0.034813695, -0.9978793, -3.7252446e-09, 0.9993862, -0.034865662, 0.99848855, -0.0019084568, -0.054702993, 0, 0, 0)
 loop = false
 script = ExtResource("1_qmy6f")
 checkpoints = [NodePath("../../CheckpointArea")]

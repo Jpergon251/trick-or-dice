@@ -33,16 +33,3 @@ func _reach_checkpoint(area: Area3D) -> void:
 		var direction = (area.spawn_zone.global_position - player.global_position).normalized()
 		var target_rotation = atan2(direction.x, direction.z)
 		player.rotation.y = target_rotation
-
-	# Esperar hasta que todos los enemigos de esta zona estén derrotados
-	await check_enemies_defeated(area)
-
-	# Continuar al siguiente checkpoint si existe
-	current_checkpoint_index += 1
-	if current_checkpoint_index < checkpoints.size():
-		is_moving = true
-
-
-func check_enemies_defeated(area: Area3D) -> void:
-	while not area.enemies_defeated:
-		await get_tree().create_timer(0.5).timeout

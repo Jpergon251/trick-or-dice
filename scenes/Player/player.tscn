@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://casop62eikowi"]
 
 [ext_resource type="Script" uid="uid://ceex06co1uk1t" path="res://scripts/player/player.gd" id="1_1kbk7"]
-[ext_resource type="PackedScene" uid="uid://ccl3cru58fcbq" path="res://scenes/HUD/hud.tscn" id="1_cyojo"]
+[ext_resource type="PackedScene" uid="uid://ccl3cru58fcbq" path="res://scenes/HUD/hud.tscn" id="2_1kbk7"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kk62l"]
 
@@ -9,10 +9,6 @@
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_1kbk7")
-
-[node name="Control" parent="." node_paths=PackedStringArray("player") instance=ExtResource("1_cyojo")]
-visible = false
-player = NodePath("..")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.46319687, 0.37883526, -0.088789165)
@@ -22,6 +18,9 @@ skeleton = NodePath("../Camera3D")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.46319687, 0.37883526, -0.088789165)
 shape = SubResource("CapsuleShape3D_kk62l")
+
+[node name="Control" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_1kbk7")]
+player = NodePath("..")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.17377138, 0.86212105, -0.088789165)
